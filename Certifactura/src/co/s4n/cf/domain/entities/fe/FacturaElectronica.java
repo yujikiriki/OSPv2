@@ -6,8 +6,8 @@ import java.util.Date;
 import co.s4n.cf.domain.entities.fe.annotations.IdDocumentoElectronico;
 import co.s4n.cf.domain.entities.fe.states.eliminada.FacturaConservadaState;
 import co.s4n.cf.domain.entities.fe.states.expedida.FacturaExpedidaState;
-import co.s4n.cf.mappers.FacturaElectronica2DTO;
-import co.s4n.osp.DomainEvent;
+import co.s4n.cf.infrastructure.mappers.FacturaElectronica2DTO;
+import co.s4n.osp.events.DomainEvent;
 import co.s4n.osp.EntityWithStates;
 import co.s4n.osp.exceptions.ActualStateException;
 import co.s4n.osp.exceptions.BusinessException;
@@ -57,7 +57,6 @@ public class FacturaElectronica extends EntityWithStates
 	public void expedir( )
 	{
 		System.out.println( "Documento electrónico creado." );
-		
 		setState( new FacturaExpedidaState( ) );
 	}
 	
