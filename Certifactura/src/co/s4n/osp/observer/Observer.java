@@ -19,11 +19,15 @@ public interface Observer< T >
 //          Methods
 //------------------------------
 	
+	/**
+	 * Update the state of the observer
+	 */
 	public void update( );
+	
+	/**
+	 * Use the associated events to update the state of the observer
+	 * @param events
+	 */
 	public void update( ArrayList< T > events );
 	
-//------------------------------
-//      Private methods
-//------------------------------
-
 }

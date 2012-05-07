@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import co.s4n.cf.domain.entities.fe.annotations.IdDocumentoElectronico;
-import co.s4n.cf.domain.entities.fe.states.eliminada.FacturaConservadaState;
+import co.s4n.cf.domain.entities.fe.listeners.HojaDeRutaFacturaElectronica;
+import co.s4n.cf.domain.entities.fe.listeners.HojaDeRutaModule;
+import co.s4n.cf.domain.entities.fe.states.conservada.FacturaConservadaState;
 import co.s4n.cf.domain.entities.fe.states.expedida.FacturaElectronicaExpedidaFactory;
 import co.s4n.cf.domain.entities.fe.states.expedida.FacturaExpedidaState;
 import co.s4n.osp.annotations.EventFactory;
@@ -17,6 +19,8 @@ import co.s4n.osp.state.EntityState;
 import co.s4n.osp.state.StateEventsFactory;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import com.google.inject.Provides;
 
 /**
@@ -34,7 +38,6 @@ public class FacturaElectronicaModule extends AbstractModule
 	 */
 	@Override protected void configure( )
 	{
-//		bind( EntityState.class ).to( FacturaExpedidaState.class );
 	}
 
 	/**
@@ -68,6 +71,9 @@ public class FacturaElectronicaModule extends AbstractModule
 	 */
 	@Provides @Observers ArrayList< Observer< DomainEvent > > provideObservers( )
 	{
-		return new ArrayList< Observer< DomainEvent > >( );
+		ArrayList< Observer< DomainEvent > > observers = new ArrayList< Observer< DomainEvent > >( );
+		Injector injector = Guice.createInjector( new HojaDeRutaModule( ) );
+		observers.add( injector.getInstance( HojaDeRutaFacturaElectronica.class ) );
+		return observers;
 	}
 }

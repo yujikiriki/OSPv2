@@ -1,18 +1,21 @@
 package co.s4n.cf.domain.entities.fe;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 import co.s4n.cf.domain.entities.fe.annotations.IdDocumentoElectronico;
-import co.s4n.cf.domain.entities.fe.states.eliminada.FacturaConservadaState;
+import co.s4n.cf.domain.entities.fe.states.conservada.FacturaConservadaState;
 import co.s4n.cf.domain.entities.fe.states.expedida.FacturaExpedidaState;
-import co.s4n.cf.infrastructure.mappers.FacturaElectronica2DTO;
-import co.s4n.osp.events.DomainEvent;
+import co.s4n.cf.ifra.mappers.FacturaElectronica2DTO;
 import co.s4n.osp.EntityWithStates;
+import co.s4n.osp.events.DomainEvent;
 import co.s4n.osp.exceptions.ActualStateException;
 import co.s4n.osp.exceptions.BusinessException;
 import co.s4n.osp.exceptions.ObserverUpdateFailed;
 import co.s4n.osp.state.EntityState;
+import co.s4n.osp.state.StateEventsFactory;
 
 import com.google.inject.Inject;
 
@@ -57,6 +60,7 @@ public class FacturaElectronica extends EntityWithStates
 	public void expedir( )
 	{
 		System.out.println( "Documento electrónico creado." );
+		setFechaExpedicion( Calendar.getInstance( ).getTime( ) );
 		setState( new FacturaExpedidaState( ) );
 	}
 	
@@ -65,7 +69,8 @@ public class FacturaElectronica extends EntityWithStates
 	 */
 	public void conservar( )
 	{
-		System.out.println( "Documento electrónico eliminado." );
+		System.out.println( "Documento electrónico en conservación." );
+		setFechaConservacion( Calendar.getInstance( ).getTime( ) );
 		setState( new FacturaConservadaState( ) );
 	}
 	
@@ -106,20 +111,40 @@ public class FacturaElectronica extends EntityWithStates
 		if( newState.equals( this.state ) )
 			throw new ActualStateException( );
 		
+		/* Set the state before the observers update */
+		this.state = newState;
+		
 		/* Notify the observers */
+		HashMap< EntityState, StateEventsFactory > eventFactories = getEventFactories( );
+		StateEventsFactory stateFactory = eventFactories.get( newState );
 		try
 		{
-			ArrayList< DomainEvent > events = getEventFactories( ).get( newState ).getEventsFor( FacturaElectronica2DTO.map( this ) );
+			ArrayList< DomainEvent > events = stateFactory.getEventsFor( newState, FacturaElectronica2DTO.map( this ) );
 			notifyObservers( events );
 		}
 		catch ( ObserverUpdateFailed e ) 
 		{
 			e.printStackTrace( );
-			ArrayList< DomainEvent > failoverEvents = getEventFactories( ).get( newState ).getFailoverEventsFor( FacturaElectronica2DTO.map( this ) );
+			ArrayList< DomainEvent > failoverEvents = stateFactory.getFailoverEventsFor( newState, FacturaElectronica2DTO.map( this ) );
 			notifyObservers( failoverEvents );
 		}
 		
-		/* If everything runs fine, update the state */
-		this.state = newState;
 	}
+
+	/**
+	 * @param fechaExpedicion
+	 */
+	private void setFechaExpedicion( Date fechaExpedicion )
+	{
+		this.fechaExpedicion = fechaExpedicion;
+	}
+
+	/**
+	 * @param fechaConservacion
+	 */
+	private void setFechaConservacion( Date fechaConservacion )
+	{
+		this.fechaConservacion = fechaConservacion;
+	}
+	
 }

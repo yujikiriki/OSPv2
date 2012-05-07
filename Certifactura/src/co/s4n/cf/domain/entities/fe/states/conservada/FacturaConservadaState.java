@@ -1,4 +1,4 @@
-package co.s4n.cf.domain.entities.fe.states.eliminada;
+package co.s4n.cf.domain.entities.fe.states.conservada;
 
 import co.s4n.osp.state.EntityState;
 

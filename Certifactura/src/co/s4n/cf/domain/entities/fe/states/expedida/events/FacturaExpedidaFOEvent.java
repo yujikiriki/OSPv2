@@ -5,4 +5,12 @@ import co.s4n.osp.events.DomainEvent;
 public class FacturaExpedidaFOEvent extends DomainEvent
 {
 
+	/**
+	 * Constructor 
+	 */
+	public FacturaExpedidaFOEvent( )
+	{
+		super( "FacturaExpedidaFOEvent" );
+	}
+
 }

@@ -23,6 +23,7 @@ public abstract class DomainEvent implements IMessage
 	
 	private Date occured;
 	private Date notified;
+	private String name;
 	
 //------------------------------
 //        Constructors
@@ -31,30 +32,31 @@ public abstract class DomainEvent implements IMessage
 	/**
 	 * Constructor
 	 */
-	public DomainEvent( )
+	public DomainEvent( String name )
 	{
 		super( );
 		this.occured = Calendar.getInstance( ).getTime( );
+		this.name = name;
 	}
 	
 //------------------------------
 //          Methods
 //------------------------------
-
+	
+	/**
+	 * @return
+	 */
+	public String getName( )
+	{
+		return name;
+	}
+	
 	/**
 	 * @return
 	 */
 	public Date getOccured( )
 	{
 		return occured;
-	}
-
-	/**
-	 * @param occured
-	 */
-	public void setOccured( Date occured )
-	{
-		this.occured = occured;
 	}
 
 	/**
@@ -72,17 +74,16 @@ public abstract class DomainEvent implements IMessage
 	{
 		this.notified = notified;
 	}
-	
-	/**
-	 * @return True if the events are the same based on the notified, occured times and if the names are equal.
-	 */
-	public Boolean isSameEventAs( DomainEvent other )
-	{
-		boolean occuredAtTheSameTime = other.occured.equals( this.occured );
-		boolean haveTheSameName = Objects.equal( other, this );
-		return occuredAtTheSameTime && haveTheSameName;
-	}
 
+	/**
+	 * @param otherEvent
+	 * @return
+	 */
+	public boolean isTheSame( DomainEvent otherEvent )
+	{
+		return otherEvent.name.equals( this.name );
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */

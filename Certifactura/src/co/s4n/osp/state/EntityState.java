@@ -69,7 +69,7 @@ public abstract class EntityState
 	@Override public String toString( )
 	{
 		return Objects.toStringHelper( this )
-			.add( "Name: ", name )
+			.add( "", name )
 			.toString( );
 	}
 	

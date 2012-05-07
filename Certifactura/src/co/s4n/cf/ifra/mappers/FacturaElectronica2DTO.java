@@ -1,4 +1,4 @@
-package co.s4n.cf.infrastructure.mappers;
+package co.s4n.cf.ifra.mappers;
 
 import co.s4n.cf.domain.entities.fe.FacturaElectronica;
 import co.s4n.cf.dtos.FacturaElectronicaDTO;
@@ -33,9 +33,13 @@ public class FacturaElectronica2DTO
 //          Methods
 //------------------------------
 	
+	/**
+	 * @param 
+	 * @return
+	 */
 	public static FacturaElectronicaDTO map( FacturaElectronica fe )
 	{
-		return null;
+		return new FacturaElectronicaDTO( fe );
 	}
 	
 //------------------------------
