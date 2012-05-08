@@ -30,6 +30,7 @@ public class FacturaElectronicaDTO implements DataTransferObject
 	private String fechaExpedicion;
 	private String fechaConservacion;
 	private String estado;
+	/* Hola */
 	
 //------------------------------
 //        Constructors
