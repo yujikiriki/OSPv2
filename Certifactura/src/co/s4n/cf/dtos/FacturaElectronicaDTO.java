@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import co.s4n.cf.domain.entities.fe.FacturaElectronica;
+import co.s4n.osp.dto.DataTransferObject;
 
 import com.google.common.base.Objects;
 

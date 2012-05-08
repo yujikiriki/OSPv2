@@ -2,6 +2,7 @@ package co.s4n.cf.ifra.mappers;
 
 import co.s4n.cf.domain.entities.fe.FacturaElectronica;
 import co.s4n.cf.dtos.FacturaElectronicaDTO;
+import co.s4n.osp.dto.DataTransferObject;
 
 /**
  * Certifactura
@@ -37,7 +38,7 @@ public class FacturaElectronica2DTO
 	 * @param 
 	 * @return
 	 */
-	public static FacturaElectronicaDTO map( FacturaElectronica fe )
+	public static DataTransferObject map( FacturaElectronica fe )
 	{
 		return new FacturaElectronicaDTO( fe );
 	}

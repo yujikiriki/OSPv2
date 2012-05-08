@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import co.s4n.cf.domain.entities.fe.states.expedida.events.FacturaExpedidaEvent;
 import co.s4n.cf.domain.entities.fe.states.expedida.events.FacturaExpedidaFOEvent;
-import co.s4n.cf.dtos.FacturaElectronicaDTO;
+import co.s4n.osp.dto.DataTransferObject;
 import co.s4n.osp.events.DomainEvent;
 import co.s4n.osp.state.EntityState;
 import co.s4n.osp.state.StateEventsFactory;
@@ -42,7 +42,7 @@ public class FacturaElectronicaExpedidaFactory implements StateEventsFactory
 	/* (non-Javadoc)
 	 * @see co.s4n.osp.state.StateEventsFactory#getEventsFor(co.s4n.cf.dtos.DataTransferObject)
 	 */
-	@Override public ArrayList< DomainEvent > getEventsFor( EntityState entityState, FacturaElectronicaDTO facturaElectronicaDTO )
+	@Override public ArrayList< DomainEvent > getEventsFor( EntityState entityState, DataTransferObject facturaElectronicaDTO )
 	{
 		ArrayList< DomainEvent > events = new ArrayList< DomainEvent >( );
 		events.add( new FacturaExpedidaEvent( facturaElectronicaDTO ) );
@@ -52,7 +52,7 @@ public class FacturaElectronicaExpedidaFactory implements StateEventsFactory
 	/* (non-Javadoc)
 	 * @see co.s4n.osp.state.StateEventsFactory#getFailoverEventsFor(co.s4n.cf.dtos.DataTransferObject)
 	 */
-	@Override public ArrayList< DomainEvent > getFailoverEventsFor( EntityState entityState, FacturaElectronicaDTO facturaElectronicaDTO )
+	@Override public ArrayList< DomainEvent > getFailoverEventsFor( EntityState entityState, DataTransferObject facturaElectronicaDTO )
 	{
 		ArrayList< DomainEvent > failOverevents = new ArrayList< DomainEvent >( );
 		failOverevents.add( new FacturaExpedidaFOEvent( ) );

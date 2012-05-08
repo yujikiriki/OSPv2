@@ -5,11 +5,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+import co.s4n.cf.domain.de.DocumentoElectronico;
 import co.s4n.cf.domain.entities.fe.annotations.IdDocumentoElectronico;
 import co.s4n.cf.domain.entities.fe.states.conservada.FacturaConservadaState;
 import co.s4n.cf.domain.entities.fe.states.expedida.FacturaExpedidaState;
 import co.s4n.cf.ifra.mappers.FacturaElectronica2DTO;
-import co.s4n.osp.EntityWithStates;
 import co.s4n.osp.events.DomainEvent;
 import co.s4n.osp.exceptions.ActualStateException;
 import co.s4n.osp.exceptions.BusinessException;
@@ -27,7 +27,7 @@ import com.google.inject.Inject;
  * Copyright (C) 2012 Yuji Kiriki 
  * Licensed under the MIT License (MIT)
  */
-public class FacturaElectronica extends EntityWithStates
+public class FacturaElectronica extends DocumentoElectronico
 {
 //------------------------------
 //        Attributes
@@ -128,7 +128,6 @@ public class FacturaElectronica extends EntityWithStates
 			ArrayList< DomainEvent > failoverEvents = stateFactory.getFailoverEventsFor( newState, FacturaElectronica2DTO.map( this ) );
 			notifyObservers( failoverEvents );
 		}
-		
 	}
 
 	/**
